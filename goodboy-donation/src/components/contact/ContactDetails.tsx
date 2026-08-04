@@ -13,6 +13,8 @@ const Grid = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: ${({ theme }) => theme.space[32]}px;
   width: 100%;
+  max-width: ${({ theme }) => theme.layout.containerMaxWidth}px;
+  margin-inline: auto;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;

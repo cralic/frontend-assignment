@@ -6,7 +6,9 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 const Page = styled.div`
   display: flex;
   width: 100%;
+  max-width: ${({ theme }) => theme.layout.pageMaxWidth}px;
   min-height: 100vh;
+  margin-inline: auto;
   padding-block: ${({ theme }) => theme.space[20]}px;
   padding-left: ${({ theme }) => theme.space[80]}px;
   padding-right: ${({ theme }) => theme.space[20]}px;
@@ -38,7 +40,7 @@ const Content = styled.div`
   flex: 0 0 ${({ theme }) => theme.layout.home.contentWidth}px;
   width: ${({ theme }) => theme.layout.home.contentWidth}px;
   max-width: 100%;
-  padding-block: ${({ theme }) => theme.space[60]}px;
+  padding-block: ${({ theme }) => theme.space[40]}px;
 
   @media (max-width: 1100px) {
     flex: 1 1 auto;

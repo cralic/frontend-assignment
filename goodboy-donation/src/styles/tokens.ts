@@ -34,6 +34,9 @@ export const colors = {
     default: "#D1D5DB",
   },
   divider: "#D1D5DB",
+  feedback: {
+    error: "#E11D48",
+  },
   flag: {
     blue: "#0052B4",
     red: "#D80027",
@@ -65,7 +68,8 @@ export const space = {
 } as const;
 
 export const layout = {
-  pageMaxWidth: 1280,
+  pageMaxWidth: 1440,
+  containerMaxWidth: 1280,
   home: {
     contentWidth: 658,
     columnGap: 80,
@@ -81,12 +85,19 @@ export const font = {
 
 export const typography = {
   heading: {
-    page: {
+    lg: {
       size: 48,
       lineHeight: 56,
       weight: 700,
       letterSpacing: -0.3,
       paragraphSpacing: 48,
+    },
+    xl: {
+      size: 60,
+      lineHeight: 72,
+      weight: 600,
+      letterSpacing: -0.3,
+      paragraphSpacing: 56,
     },
   },
   text: {

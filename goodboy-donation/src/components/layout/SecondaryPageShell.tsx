@@ -12,9 +12,10 @@ const Main = styled.main`
   min-height: 100vh;
   margin-inline: auto;
   padding-block: ${({ theme }) => theme.space[60]}px;
+  padding-inline: ${({ theme }) => theme.space[80]}px;
   box-sizing: border-box;
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1100px) {
     padding-inline: ${({ theme }) => theme.space[32]}px;
   }
 
@@ -44,11 +45,11 @@ const Header = styled.div`
 const Title = styled.h1`
   margin: 0;
   color: ${({ theme }) => theme.colors.content.primary};
-  font-size: ${({ theme }) => theme.typography.heading.page.size}px;
-  font-weight: ${({ theme }) => theme.typography.heading.page.weight};
-  line-height: ${({ theme }) => theme.typography.heading.page.lineHeight}px;
+  font-size: ${({ theme }) => theme.typography.heading.lg.size}px;
+  font-weight: ${({ theme }) => theme.typography.heading.lg.weight};
+  line-height: ${({ theme }) => theme.typography.heading.lg.lineHeight}px;
   letter-spacing: ${({ theme }) =>
-    theme.typography.heading.page.letterSpacing}px;
+    theme.typography.heading.lg.letterSpacing}px;
 `;
 
 type SecondaryPageShellProps = {

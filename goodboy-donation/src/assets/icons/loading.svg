@@ -1,0 +1,10 @@
+<svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="8.02083" width="2.29167" height="4.58333" rx="1.14583" fill="currentColor"/>
+<rect opacity="0.16" x="14.8388" y="1.87451" width="2.29167" height="4.58333" rx="1.14583" transform="rotate(45 14.8388 1.87451)" fill="currentColor"/>
+<rect opacity="0.4" width="2.29167" height="4.58333" rx="1.14583" transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 14.8388 16.458)" fill="currentColor"/>
+<rect opacity="0.28" x="18.3333" y="8.021" width="2.29167" height="4.58333" rx="1.14583" transform="rotate(90 18.3333 8.021)" fill="currentColor"/>
+<rect opacity="0.52" x="8.02083" y="13.75" width="2.29167" height="4.58333" rx="1.14583" fill="currentColor"/>
+<rect opacity="0.64" x="5.11597" y="11.5972" width="2.29167" height="4.58333" rx="1.14583" transform="rotate(45 5.11597 11.5972)" fill="currentColor"/>
+<rect opacity="0.88" width="2.29167" height="4.58333" rx="1.14583" transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 5.11597 6.73535)" fill="currentColor"/>
+<rect opacity="0.76" x="4.58333" y="8.021" width="2.29167" height="4.58333" rx="1.14583" transform="rotate(90 4.58333 8.021)" fill="currentColor"/>
+</svg>
