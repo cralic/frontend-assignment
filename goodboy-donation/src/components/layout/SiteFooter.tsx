@@ -57,9 +57,9 @@ const SocialLink = styled.a`
 
 const NavLink = styled(Link)`
   color: ${({ theme }) => theme.colors.content.tertiary};
-  font-size: ${({ theme }) => theme.typography.text.body.size}px;
-  font-weight: ${({ theme }) => theme.typography.text.body.weight};
-  line-height: ${({ theme }) => theme.typography.text.body.lineHeight}px;
+  font-size: ${({ theme }) => theme.typography.text.md.size}px;
+  font-weight: ${({ theme }) => theme.typography.text.md.weight};
+  line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
   transition: color 150ms ease;
 
   &:hover {

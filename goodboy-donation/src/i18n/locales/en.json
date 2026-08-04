@@ -6,7 +6,8 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "back": "Back"
   },
   "pages": {
     "home": {
@@ -16,7 +17,21 @@
       "title": "About"
     },
     "contact": {
-      "title": "Contact"
+      "title": "Contact",
+      "cards": {
+        "email": {
+          "title": "Email",
+          "description": "Our friendly team is here to help."
+        },
+        "office": {
+          "title": "Office",
+          "description": "Come say hello at our office HQ."
+        },
+        "phone": {
+          "title": "Phone",
+          "description": "Mon-Fri from 8am to 5pm."
+        }
+      }
     }
   }
 }

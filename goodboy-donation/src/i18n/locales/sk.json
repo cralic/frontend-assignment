@@ -6,7 +6,8 @@
   "nav": {
     "home": "Domov",
     "about": "O projekte",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "back": "Späť"
   },
   "pages": {
     "home": {
@@ -16,7 +17,21 @@
       "title": "O projekte"
     },
     "contact": {
-      "title": "Kontakt"
+      "title": "Kontakt",
+      "cards": {
+        "email": {
+          "title": "Email",
+          "description": "Our friendly team is here to help."
+        },
+        "office": {
+          "title": "Office",
+          "description": "Come say hello at our office HQ."
+        },
+        "phone": {
+          "title": "Phone",
+          "description": "Mon-Fri from 8am to 5pm."
+        }
+      }
     }
   }
 }

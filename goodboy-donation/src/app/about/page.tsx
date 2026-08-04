@@ -7,8 +7,8 @@ export default function AboutPage() {
   const { t } = useTranslation();
 
   return (
-    <SecondaryPageShell>
-      <h1>{t("pages.about.title")}</h1>
+    <SecondaryPageShell title={t("pages.about.title")}>
+      {/* About body */}
     </SecondaryPageShell>
   );
 }

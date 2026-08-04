@@ -43,7 +43,9 @@ export const colors = {
 export const radius = {
   checkbox: 4,
   control: 8,
+  featuredIcon: 10,
   segmented: 12,
+  link: 16,
   image: 20,
   stepper: 32,
 } as const;
@@ -58,6 +60,7 @@ export const space = {
   40: 40,
   48: 48,
   60: 60,
+  64: 64,
   80: 80,
 } as const;
 
@@ -65,9 +68,10 @@ export const layout = {
   pageMaxWidth: 1280,
   home: {
     contentWidth: 658,
-    imageWidth: 602,
-    imageHeight: 984,
     columnGap: 80,
+  },
+  contact: {
+    imageWidth: 1120,
   },
 } as const;
 
@@ -76,8 +80,24 @@ export const font = {
 } as const;
 
 export const typography = {
+  heading: {
+    page: {
+      size: 48,
+      lineHeight: 56,
+      weight: 700,
+      letterSpacing: -0.3,
+      paragraphSpacing: 48,
+    },
+  },
   text: {
-    body: {
+    xl: {
+      size: 20,
+      lineHeight: 32,
+      weight: 600,
+      paragraphSpacing: 24,
+      letterSpacing: 0,
+    },
+    md: {
       size: 16,
       lineHeight: 24,
       weight: 400,
