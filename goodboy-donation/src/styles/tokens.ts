@@ -49,23 +49,51 @@ export const radius = {
 } as const;
 
 export const space = {
-  xs: 8,
-  sm: 12,
-  md: 16,
-  lg: 24,
-  xl: 32,
-  "2xl": 48,
+  8: 8,
+  12: 12,
+  16: 16,
+  20: 20,
+  24: 24,
+  32: 32,
+  40: 40,
+  48: 48,
+  60: 60,
+  80: 80,
+} as const;
+
+export const layout = {
+  pageMaxWidth: 1280,
+  home: {
+    contentWidth: 658,
+    imageWidth: 602,
+    imageHeight: 984,
+    columnGap: 80,
+  },
 } as const;
 
 export const font = {
   sans: "var(--font-sans), Inter, system-ui, sans-serif",
 } as const;
 
+export const typography = {
+  text: {
+    body: {
+      size: 16,
+      lineHeight: 24,
+      weight: 400,
+      paragraphSpacing: 16,
+      letterSpacing: 0,
+    },
+  },
+} as const;
+
 export const tokens = {
   colors,
   radius,
   space,
+  layout,
   font,
+  typography,
 } as const;
 
 export type AppTokens = typeof tokens;
