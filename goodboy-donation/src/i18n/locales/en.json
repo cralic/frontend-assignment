@@ -1,6 +1,22 @@
 {
-    "app": {
-      "title": "GoodBoy",
-      "description": "Support for Slovak dog shelters"
+  "app": {
+    "title": "GoodBoy",
+    "description": "Support for Slovak dog shelters"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "pages": {
+    "home": {
+      "title": "I want to help"
+    },
+    "about": {
+      "title": "About"
+    },
+    "contact": {
+      "title": "Contact"
     }
   }
+}

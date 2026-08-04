@@ -1,6 +1,22 @@
 {
-    "app": {
-      "title": "GoodBoy",
-      "description": "Podpora slovenských útulkov"
+  "app": {
+    "title": "GoodBoy",
+    "description": "Podpora slovenských útulkov"
+  },
+  "nav": {
+    "home": "Domov",
+    "about": "O projekte",
+    "contact": "Kontakt"
+  },
+  "pages": {
+    "home": {
+      "title": "Chcem pomôcť"
+    },
+    "about": {
+      "title": "O projekte"
+    },
+    "contact": {
+      "title": "Kontakt"
     }
   }
+}
