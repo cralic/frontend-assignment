@@ -28,6 +28,15 @@ const Title = styled.h1`
     theme.typography.heading.lg.letterSpacing}px;
 `;
 
+export const StepSubtitle = styled.h2`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.content.primary};
+  font-size: ${({ theme }) => theme.typography.text.md.size}px;
+  font-weight: 600;
+  line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.typography.text.md.letterSpacing}px;
+`;
+
 export function DonationStepShell({
   currentStep,
   title,

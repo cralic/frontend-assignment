@@ -64,13 +64,13 @@
     },
     "step1": {
       "title": "Vyberte si možnosť, ako chcete pomôcť",
+      "subtitle": "O projekte",
       "helpType": {
         "shelter": "Prispieť konkrétnemu útulku",
         "foundation": "Prispieť celej nadácii",
         "label": "Forma pomoci"
       },
       "shelter": {
-        "sectionTitle": "O projekte",
         "label": "Útulok",
         "optional": "(Nepovinné)",
         "placeholder": "Vyberte útulok zo zoznamu",
@@ -86,10 +86,33 @@
       }
     },
     "step2": {
-      "title": "Potrebujeme od Vás zopár informácií"
+      "title": "Potrebujeme od Vás zopár informácií",
+      "subtitle": "O vás",
+      "firstName": {
+        "label": "Meno",
+        "placeholder": "Zadajte Vaše meno",
+        "required": "Meno musí mať 2–20 znakov."
+      },
+      "lastName": {
+        "label": "Priezvisko",
+        "placeholder": "Zadajte Vaše priezvisko",
+        "required": "Priezvisko musí mať 2–30 znakov."
+      },
+      "email": {
+        "label": "E-mailová adresa",
+        "placeholder": "Zadajte Váš e-mail",
+        "required": "Zadajte platnú e-mailovú adresu."
+      },
+      "phone": {
+        "label": "Telefónne číslo",
+        "placeholder": "123 321 123",
+        "countryLabel": "Krajina telefónneho čísla",
+        "required": "Zadajte platné SK (+421) alebo CZ (+420) číslo."
+      }
     },
     "step3": {
-      "title": "Skontrolujte si zadané údaje"
+      "title": "Skontrolujte si zadané údaje",
+      "subtitle": "Zhrnutie"
     }
   }
 }

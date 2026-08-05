@@ -64,13 +64,13 @@
     },
     "step1": {
       "title": "Choose how you want to help",
+      "subtitle": "About the project",
       "helpType": {
         "shelter": "Donate to a specific shelter",
         "foundation": "Donate to the whole foundation",
         "label": "Form of help"
       },
       "shelter": {
-        "sectionTitle": "About the project",
         "label": "Shelter",
         "optional": "(Optional)",
         "placeholder": "Select a shelter from the list",
@@ -86,10 +86,33 @@
       }
     },
     "step2": {
-      "title": "We need a few details from you"
+      "title": "We need a few details from you",
+      "subtitle": "About you",
+      "firstName": {
+        "label": "First name",
+        "placeholder": "Enter your first name",
+        "required": "First name must be 2–20 characters."
+      },
+      "lastName": {
+        "label": "Last name",
+        "placeholder": "Enter your last name",
+        "required": "Last name must be 2–30 characters."
+      },
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email",
+        "required": "Please enter a valid email address."
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "123 321 123",
+        "countryLabel": "Phone country",
+        "required": "Enter a valid SK (+421) or CZ (+420) phone number."
+      }
     },
     "step3": {
-      "title": "Review your details"
+      "title": "Review your details",
+      "subtitle": "Summary"
     }
   }
 }

@@ -5,7 +5,11 @@ import { DonationStep1 } from "@/components/donation/DonationStep1";
 import { DonationStep2 } from "@/components/donation/DonationStep2";
 import { DonationStep3 } from "@/components/donation/DonationStep3";
 import { FormActions } from "@/components/donation/FormActions";
-import { hasStepErrors, validateStep1 } from "@/lib/validateDonationForm";
+import {
+  hasStepErrors,
+  validateStep1,
+  validateStep2,
+} from "@/lib/validateDonationForm";
 import { useDonationFormStore } from "@/store/donationForm";
 
 export function DonationForm() {
@@ -18,8 +22,14 @@ export function DonationForm() {
 
 export function DonationFormActions() {
   const { t } = useTranslation();
-  const { stepIndex, values, setStep1Errors, nextStep, prevStep } =
-    useDonationFormStore();
+  const {
+    stepIndex,
+    values,
+    setStep1Errors,
+    setStep2Errors,
+    nextStep,
+    prevStep,
+  } = useDonationFormStore();
 
   const isLastStep = stepIndex === 2;
 
@@ -27,6 +37,12 @@ export function DonationFormActions() {
     if (stepIndex === 0) {
       const errors = validateStep1(values);
       setStep1Errors(errors);
+      if (hasStepErrors(errors)) return;
+    }
+
+    if (stepIndex === 1) {
+      const errors = validateStep2(values);
+      setStep2Errors(errors);
       if (hasStepErrors(errors)) return;
     }
 

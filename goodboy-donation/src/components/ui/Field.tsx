@@ -31,18 +31,26 @@ export const FieldError = styled.p`
   line-height: ${({ theme }) => theme.typography.text.sm.lineHeight}px;
 `;
 
-export const SectionTitle = styled.h2`
-  margin: 0;
-  color: ${({ theme }) => theme.colors.content.primary};
-  font-size: ${({ theme }) => theme.typography.text.md.size}px;
-  font-weight: 600;
-  line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.typography.text.md.letterSpacing}px;
-`;
-
 export const FieldsStack = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[32]}px;
   width: 100%;
+`;
+
+export const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.space[16]}px;
+  width: 100%;
+`;
+
+export const FieldRow = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.space[16]}px;
+  width: 100%;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;

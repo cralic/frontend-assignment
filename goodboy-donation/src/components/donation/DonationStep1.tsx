@@ -2,29 +2,24 @@
 
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { AmountPicker } from "@/components/donation/AmountPicker";
-import { DonationStepShell } from "@/components/donation/DonationStepShell";
+import {
+  DonationStepShell,
+  StepSubtitle,
+} from "@/components/donation/DonationStepShell";
 import {
   FieldError,
+  FieldGroup,
   FieldLabel,
   FieldsStack,
   InputField,
   OptionalMark,
-  SectionTitle,
 } from "@/components/ui/Field";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { Select } from "@/components/ui/Select";
 import type { HelpType } from "@/config/donation";
 import { useShelters } from "@/hooks/shelters";
 import { useDonationFormStore } from "@/store/donationForm";
-
-const ShelterSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.space[16]}px;
-  width: 100%;
-`;
 
 export function DonationStep1() {
   const { t } = useTranslation();
@@ -67,10 +62,8 @@ export function DonationStep1() {
           ]}
         />
 
-        <ShelterSection aria-labelledby="donation-about-project">
-          <SectionTitle id="donation-about-project">
-            {t("form.step1.shelter.sectionTitle")}
-          </SectionTitle>
+        <FieldGroup>
+          <StepSubtitle>{t("form.step1.subtitle")}</StepSubtitle>
 
           <InputField>
             <FieldLabel id={shelterLabelId} htmlFor="donation-shelter">
@@ -109,7 +102,7 @@ export function DonationStep1() {
               </FieldError>
             ) : null}
           </InputField>
-        </ShelterSection>
+        </FieldGroup>
 
         <AmountPicker
           id="donation-amount"
