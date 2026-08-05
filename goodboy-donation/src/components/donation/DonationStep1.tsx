@@ -83,7 +83,15 @@ export function DonationStep1() {
               aria-invalid={Boolean(step1Errors.shelterId)}
               disabled={isPending || isError}
               value={values.shelterId}
-              onValueChange={(shelterId) => patchValues({ shelterId })}
+              onValueChange={(shelterId) => {
+                const shelter = data?.shelters.find(
+                  (item) => String(item.id) === shelterId,
+                );
+                patchValues({
+                  shelterId,
+                  shelterName: shelter?.name ?? "",
+                });
+              }}
               placeholder={
                 isPending
                   ? t("form.step1.shelter.loading")

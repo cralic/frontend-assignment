@@ -3,8 +3,9 @@
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
 import CheckmarkIcon from "@/assets/icons/checkmark.svg";
+import XIcon from "@/assets/icons/x.svg";
 
-export type StepStatus = "upcoming" | "current" | "completed";
+export type StepStatus = "upcoming" | "current" | "completed" | "error";
 
 export type StepperStep = {
   id: string;
@@ -15,6 +16,7 @@ export type StepperStep = {
 type StepperProps = {
   steps: StepperStep[];
   currentStep?: number;
+  errorSteps?: number[];
   className?: string;
   "aria-label"?: string;
 };
@@ -22,9 +24,11 @@ type StepperProps = {
 function resolveStatus(
   index: number,
   currentStep: number,
+  errorSteps: number[],
   explicit?: StepStatus,
 ): StepStatus {
   if (explicit) return explicit;
+  if (errorSteps.includes(index)) return "error";
   if (index < currentStep) return "completed";
   if (index === currentStep) return "current";
   return "upcoming";
@@ -69,10 +73,16 @@ const Label = styled.span<{ $status: StepStatus }>`
   line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
   letter-spacing: ${({ theme }) => theme.typography.text.md.letterSpacing}px;
 
-  color: ${({ theme, $status }) =>
-    $status === "upcoming"
-      ? theme.colors.content.quaternary
-      : theme.colors.content.primary};
+  color: ${({ theme, $status }) => {
+    switch ($status) {
+      case "upcoming":
+        return theme.colors.content.quaternary;
+      case "error":
+        return theme.colors.feedback.error;
+      default:
+        return theme.colors.content.primary;
+    }
+  }};
 `;
 
 const Tail = styled.span`
@@ -121,6 +131,12 @@ const IconRoot = styled.span<{ $status: StepStatus }>`
           color: ${theme.colors.action.primary.default};
           border: 1px solid ${theme.colors.action.primary.default};
         `;
+      case "error":
+        return css`
+          background: ${theme.colors.surface.primary};
+          color: ${theme.colors.feedback.error};
+          border: 1px solid ${theme.colors.feedback.error};
+        `;
       case "upcoming":
       default:
         return css`
@@ -158,7 +174,13 @@ type StepIconProps = {
 export function StepIcon({ status, stepNumber }: StepIconProps) {
   return (
     <IconRoot $status={status} aria-hidden>
-      {status === "completed" ? <CheckmarkIcon /> : stepNumber}
+      {status === "completed" ? (
+        <CheckmarkIcon />
+      ) : status === "error" ? (
+        <XIcon />
+      ) : (
+        stepNumber
+      )}
     </IconRoot>
   );
 }
@@ -166,6 +188,7 @@ export function StepIcon({ status, stepNumber }: StepIconProps) {
 export function Stepper({
   steps,
   currentStep = 0,
+  errorSteps = [],
   className,
   "aria-label": ariaLabel,
 }: StepperProps) {
@@ -175,7 +198,12 @@ export function Stepper({
   return (
     <List className={className} aria-label={label}>
       {steps.map((step, index) => {
-        const status = resolveStatus(index, currentStep, step.status);
+        const status = resolveStatus(
+          index,
+          currentStep,
+          errorSteps,
+          step.status,
+        );
         const isLast = index === steps.length - 1;
         const stepNumber = index + 1;
         const showTail = !isLast;

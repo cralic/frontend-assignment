@@ -44,7 +44,6 @@ export function DonationStep2() {
               autoComplete="given-name"
               value={values.firstName}
               placeholder={t("form.step2.firstName.placeholder")}
-              aria-required
               aria-invalid={Boolean(step2Errors.firstName) || undefined}
               aria-describedby={
                 step2Errors.firstName ? firstNameErrorId : undefined
@@ -55,7 +54,7 @@ export function DonationStep2() {
             />
             {step2Errors.firstName ? (
               <FieldError id={firstNameErrorId} role="alert">
-                {t("form.step2.firstName.required")}
+                {t("form.step2.firstName.invalid")}
               </FieldError>
             ) : null}
           </InputField>

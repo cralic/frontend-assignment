@@ -54,7 +54,8 @@
       "status": {
         "completed": "dokončené",
         "current": "aktuálne",
-        "upcoming": "nasledujúce"
+        "upcoming": "nasledujúce",
+        "error": "chyba"
       },
       "steps": {
         "shelter": "Výber útulku",
@@ -91,7 +92,7 @@
       "firstName": {
         "label": "Meno",
         "placeholder": "Zadajte Vaše meno",
-        "required": "Meno musí mať 2–20 znakov."
+        "invalid": "Meno musí mať 2–20 znakov."
       },
       "lastName": {
         "label": "Priezvisko",
@@ -112,7 +113,23 @@
     },
     "step3": {
       "title": "Skontrolujte si zadané údaje",
-      "subtitle": "Zhrnutie"
+      "subtitle": "Zhrnutie",
+      "summary": {
+        "helpType": "Forma pomoci",
+        "helpTypeValue": {
+          "foundation": "Finančný príspevok celej nadácii",
+          "shelter": "Finančný príspevok konkrétnemu útulku"
+        },
+        "shelter": "Útulok",
+        "amount": "Suma príspevku",
+        "name": "Meno a priezvisko",
+        "email": "E-mail",
+        "phone": "Telefónne číslo"
+      },
+      "consent": {
+        "label": "Súhlasím so spracovaním mojich osobných údajov",
+        "required": "Pred odoslaním musíte súhlasiť so spracovaním osobných údajov."
+      }
     }
   }
 }

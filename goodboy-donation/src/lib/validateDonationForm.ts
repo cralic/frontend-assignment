@@ -3,9 +3,11 @@ import type { DonationFormValues } from "@/store/donationForm";
 
 export type Step1Field = "shelterId" | "amount";
 export type Step2Field = "firstName" | "lastName" | "email" | "phone";
+export type Step3Field = "consent";
 
 export type Step1Errors = Partial<Record<Step1Field, true>>;
 export type Step2Errors = Partial<Record<Step2Field, true>>;
+export type Step3Errors = Partial<Record<Step3Field, true>>;
 
 /** @see https://colinhacks.com/essays/reasonable-email-regex */
 const EMAIL_PATTERN =
@@ -47,8 +49,12 @@ export function validateStep1(values: DonationFormValues): Step1Errors {
 
 export function validateStep2(values: DonationFormValues): Step2Errors {
   const errors: Step2Errors = {};
+  const firstName = values.firstName.trim();
 
-  if (!isLengthInRange(values.firstName, FIRST_NAME_MIN, FIRST_NAME_MAX)) {
+  if (
+    firstName.length > 0 &&
+    !isLengthInRange(values.firstName, FIRST_NAME_MIN, FIRST_NAME_MAX)
+  ) {
     errors.firstName = true;
   }
 
@@ -62,6 +68,16 @@ export function validateStep2(values: DonationFormValues): Step2Errors {
 
   if (!isValidPhone(values.phone, values.phoneCountry)) {
     errors.phone = true;
+  }
+
+  return errors;
+}
+
+export function validateStep3(values: DonationFormValues): Step3Errors {
+  const errors: Step3Errors = {};
+
+  if (!values.consent) {
+    errors.consent = true;
   }
 
   return errors;

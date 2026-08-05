@@ -9,6 +9,7 @@ import {
   hasStepErrors,
   validateStep1,
   validateStep2,
+  validateStep3,
 } from "@/lib/validateDonationForm";
 import { useDonationFormStore } from "@/store/donationForm";
 
@@ -27,6 +28,7 @@ export function DonationFormActions() {
     values,
     setStep1Errors,
     setStep2Errors,
+    setStep3Errors,
     nextStep,
     prevStep,
   } = useDonationFormStore();
@@ -46,9 +48,14 @@ export function DonationFormActions() {
       if (hasStepErrors(errors)) return;
     }
 
-    if (!isLastStep) {
-      nextStep();
+    if (stepIndex === 2) {
+      const errors = validateStep3(values);
+      setStep3Errors(errors);
+      if (hasStepErrors(errors)) return;
+      return;
     }
+
+    nextStep();
   }
 
   return (

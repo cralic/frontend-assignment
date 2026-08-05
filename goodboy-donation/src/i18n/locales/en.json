@@ -54,7 +54,8 @@
       "status": {
         "completed": "completed",
         "current": "current",
-        "upcoming": "upcoming"
+        "upcoming": "upcoming",
+        "error": "error"
       },
       "steps": {
         "shelter": "Shelter selection",
@@ -91,7 +92,7 @@
       "firstName": {
         "label": "First name",
         "placeholder": "Enter your first name",
-        "required": "First name must be 2–20 characters."
+        "invalid": "First name must be 2–20 characters."
       },
       "lastName": {
         "label": "Last name",
@@ -112,7 +113,23 @@
     },
     "step3": {
       "title": "Review your details",
-      "subtitle": "Summary"
+      "subtitle": "Summary",
+      "summary": {
+        "helpType": "Form of help",
+        "helpTypeValue": {
+          "foundation": "Financial contribution to the whole foundation",
+          "shelter": "Financial contribution to a specific shelter"
+        },
+        "shelter": "Shelter",
+        "amount": "Contribution amount",
+        "name": "First and last name",
+        "email": "Email",
+        "phone": "Phone number"
+      },
+      "consent": {
+        "label": "I agree to the processing of my personal data",
+        "required": "You must agree to personal data processing before submitting."
+      }
     }
   }
 }
