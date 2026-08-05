@@ -47,7 +47,13 @@
     "actions": {
       "back": "Späť",
       "continue": "Pokračovať",
-      "submit": "Odoslať formulár"
+      "submit": "Odoslať formulár",
+      "submitting": "Odosielam…"
+    },
+    "submit": {
+      "success": "Príspevok bol úspešne zaznamenaný",
+      "error": "Odoslanie sa nepodarilo. Skúste to prosím neskôr.",
+      "fieldError": "Skontrolujte zvýraznené polia a skúste to znova."
     },
     "stepper": {
       "label": "Priebeh darovacieho formulára",

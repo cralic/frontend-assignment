@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   DonationStepShell,
@@ -16,7 +17,8 @@ import {
 } from "@/components/ui/Field";
 import { TextInput } from "@/components/ui/TextInput";
 import type { PhoneCountryCode } from "@/config/donation";
-import { useDonationFormStore } from "@/store/donationForm";
+import { withPhoneDial } from "@/lib/phone";
+import type { DonationFormValues } from "@/lib/donationSchema";
 
 export function DonationStep2() {
   const { t } = useTranslation();
@@ -26,7 +28,9 @@ export function DonationStep2() {
   const firstNameErrorId = useId();
   const lastNameErrorId = useId();
   const emailErrorId = useId();
-  const { values, patchValues, step2Errors } = useDonationFormStore();
+  const { register, control, setValue, clearErrors } =
+    useFormContext<DonationFormValues>();
+  const { errors } = useFormState({ control });
 
   return (
     <DonationStepShell currentStep={1} title={t("form.step2.title")}>
@@ -34,6 +38,12 @@ export function DonationStep2() {
         <StepSubtitle>{t("form.step2.subtitle")}</StepSubtitle>
 
         <FieldRow>
+          {/*
+            First name: assignment says optional (2–20 when filled).
+            Figma has no “(optional)” marker, so the label stays unmarked.
+            The contribute API still rejects an empty firstName so we keep FE
+            optional per the brief and surface API errors on submit.
+          */}
           <InputField>
             <FieldLabel htmlFor={firstNameId}>
               {t("form.step2.firstName.label")}
@@ -42,19 +52,18 @@ export function DonationStep2() {
               id={firstNameId}
               type="text"
               autoComplete="given-name"
-              value={values.firstName}
               placeholder={t("form.step2.firstName.placeholder")}
-              aria-invalid={Boolean(step2Errors.firstName) || undefined}
+              aria-invalid={Boolean(errors.firstName) || undefined}
               aria-describedby={
-                step2Errors.firstName ? firstNameErrorId : undefined
+                errors.firstName ? firstNameErrorId : undefined
               }
-              onChange={(event) =>
-                patchValues({ firstName: event.target.value })
-              }
+              {...register("firstName", {
+                onChange: () => clearErrors("firstName"),
+              })}
             />
-            {step2Errors.firstName ? (
+            {errors.firstName?.message ? (
               <FieldError id={firstNameErrorId} role="alert">
-                {t("form.step2.firstName.invalid")}
+                {t(errors.firstName.message)}
               </FieldError>
             ) : null}
           </InputField>
@@ -67,20 +76,19 @@ export function DonationStep2() {
               id={lastNameId}
               type="text"
               autoComplete="family-name"
-              value={values.lastName}
               placeholder={t("form.step2.lastName.placeholder")}
               aria-required
-              aria-invalid={Boolean(step2Errors.lastName) || undefined}
+              aria-invalid={Boolean(errors.lastName) || undefined}
               aria-describedby={
-                step2Errors.lastName ? lastNameErrorId : undefined
+                errors.lastName ? lastNameErrorId : undefined
               }
-              onChange={(event) =>
-                patchValues({ lastName: event.target.value })
-              }
+              {...register("lastName", {
+                onChange: () => clearErrors("lastName"),
+              })}
             />
-            {step2Errors.lastName ? (
+            {errors.lastName?.message ? (
               <FieldError id={lastNameErrorId} role="alert">
-                {t("form.step2.lastName.required")}
+                {t(errors.lastName.message)}
               </FieldError>
             ) : null}
           </InputField>
@@ -94,35 +102,57 @@ export function DonationStep2() {
             id={emailId}
             type="email"
             autoComplete="email"
-            value={values.email}
             placeholder={t("form.step2.email.placeholder")}
             aria-required
-            aria-invalid={Boolean(step2Errors.email) || undefined}
-            aria-describedby={step2Errors.email ? emailErrorId : undefined}
-            onChange={(event) => patchValues({ email: event.target.value })}
+            aria-invalid={Boolean(errors.email) || undefined}
+            aria-describedby={errors.email ? emailErrorId : undefined}
+            {...register("email", {
+              onChange: () => clearErrors("email"),
+            })}
           />
-          {step2Errors.email ? (
+          {errors.email?.message ? (
             <FieldError id={emailErrorId} role="alert">
-              {t("form.step2.email.required")}
+              {t(errors.email.message)}
             </FieldError>
           ) : null}
         </InputField>
 
-        <PhoneField
-          id="donation-phone"
-          label={t("form.step2.phone.label")}
-          countryLabel={t("form.step2.phone.countryLabel")}
-          placeholder={t("form.step2.phone.placeholder")}
-          country={values.phoneCountry}
-          onCountryChange={(phoneCountry: PhoneCountryCode) =>
-            patchValues({ phoneCountry })
-          }
-          value={values.phone}
-          onValueChange={(phone) => patchValues({ phone })}
-          aria-required
-          error={
-            step2Errors.phone ? t("form.step2.phone.required") : undefined
-          }
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <Controller
+              name="phoneCountry"
+              control={control}
+              render={({ field: countryField }) => (
+                <PhoneField
+                  id="donation-phone"
+                  label={t("form.step2.phone.label")}
+                  countryLabel={t("form.step2.phone.countryLabel")}
+                  placeholder={t("form.step2.phone.placeholder")}
+                  country={countryField.value}
+                  onCountryChange={(phoneCountry: PhoneCountryCode) => {
+                    countryField.onChange(phoneCountry);
+                    setValue("phone", withPhoneDial(field.value, phoneCountry), {
+                      shouldDirty: true,
+                    });
+                    clearErrors("phone");
+                  }}
+                  value={field.value}
+                  onValueChange={(phone) => {
+                    field.onChange(phone);
+                    clearErrors("phone");
+                  }}
+                  aria-required
+                  error={
+                    errors.phone?.message
+                      ? t(errors.phone.message)
+                      : undefined
+                  }
+                />
+              )}
+            />
+          )}
         />
       </FieldGroup>
     </DonationStepShell>

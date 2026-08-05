@@ -47,7 +47,13 @@
     "actions": {
       "back": "Back",
       "continue": "Continue",
-      "submit": "Submit form"
+      "submit": "Submit form",
+      "submitting": "Submitting…"
+    },
+    "submit": {
+      "success": "Your contribution was recorded successfully",
+      "error": "Could not submit the form. Please try again later.",
+      "fieldError": "Please check the highlighted fields and try again."
     },
     "stepper": {
       "label": "Donation form progress",

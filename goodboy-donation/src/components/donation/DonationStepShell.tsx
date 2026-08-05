@@ -2,9 +2,10 @@
 
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useFormContext, useFormState } from "react-hook-form";
 import { Stepper } from "@/components/ui/Stepper";
-import { hasStepErrors } from "@/lib/validateDonationForm";
-import { useDonationFormStore } from "@/store/donationForm";
+import type { DonationFormValues } from "@/lib/donationSchema";
+import { getErrorSteps } from "@/lib/formValidation";
 
 type DonationStepShellProps = {
   currentStep: number;
@@ -46,19 +47,14 @@ export function DonationStepShell({
   className,
 }: DonationStepShellProps) {
   const { t } = useTranslation();
-  const { step1Errors, step2Errors, step3Errors } = useDonationFormStore();
-
-  const errorSteps = [
-    hasStepErrors(step1Errors) ? 0 : null,
-    hasStepErrors(step2Errors) ? 1 : null,
-    hasStepErrors(step3Errors) ? 2 : null,
-  ].filter((index): index is number => index != null);
+  const { control } = useFormContext<DonationFormValues>();
+  const { errors } = useFormState({ control });
 
   return (
     <Root className={className}>
       <Stepper
         currentStep={currentStep}
-        errorSteps={errorSteps}
+        errorSteps={getErrorSteps(errors)}
         steps={[
           { id: "shelter", label: t("form.stepper.steps.shelter") },
           { id: "personal", label: t("form.stepper.steps.personal") },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { Controller, useFormContext, useFormState, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import {
@@ -9,7 +10,7 @@ import {
 } from "@/components/donation/DonationStepShell";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { FieldError, FieldGroup } from "@/components/ui/Field";
-import { useDonationFormStore } from "@/store/donationForm";
+import type { DonationFormValues } from "@/lib/donationSchema";
 
 const Summary = styled(FieldGroup)`
   width: 100%;
@@ -64,8 +65,7 @@ const ConsentField = styled.div`
   width: 100%;
 `;
 
-function formatAmount(amount: number | null, currency: string) {
-  if (amount == null) return `0 ${currency}`;
+function formatAmount(amount: number, currency: string) {
   return `${amount} ${currency}`;
 }
 
@@ -77,9 +77,14 @@ export function DonationStep3() {
   const { t } = useTranslation();
   const consentId = useId();
   const consentErrorId = useId();
-  const { values, patchValues, step3Errors } = useDonationFormStore();
+  const { control, clearErrors } = useFormContext<DonationFormValues>();
+  const { errors } = useFormState({ control });
 
-  const fullName = formatFullName(values.firstName, values.lastName);
+  const values = useWatch({ control });
+  const fullName = formatFullName(
+    values.firstName ?? "",
+    values.lastName ?? "",
+  );
 
   return (
     <DonationStepShell currentStep={2} title={t("form.step3.title")}>
@@ -89,19 +94,24 @@ export function DonationStep3() {
         <Row>
           <RowLabel>{t("form.step3.summary.helpType")}</RowLabel>
           <RowValue>
-            {t(`form.step3.summary.helpTypeValue.${values.helpType}`)}
+            {t(
+              `form.step3.summary.helpTypeValue.${values.helpType ?? "foundation"}`,
+            )}
           </RowValue>
         </Row>
 
         <Row>
           <RowLabel>{t("form.step3.summary.shelter")}</RowLabel>
-          <RowValue>{values.shelterName.trim() || "-"}</RowValue>
+          <RowValue>{values.shelterName?.trim() || "-"}</RowValue>
         </Row>
 
         <Row>
           <RowLabel>{t("form.step3.summary.amount")}</RowLabel>
           <RowValue>
-            {formatAmount(values.amount, t("form.step1.amount.currency"))}
+            {formatAmount(
+              values.amount ?? 0,
+              t("form.step1.amount.currency"),
+            )}
           </RowValue>
         </Row>
 
@@ -114,30 +124,39 @@ export function DonationStep3() {
 
         <Row>
           <RowLabel>{t("form.step3.summary.email")}</RowLabel>
-          <RowValue>{values.email.trim() || "-"}</RowValue>
+          <RowValue>{values.email?.trim() || "-"}</RowValue>
         </Row>
 
         <Row>
           <RowLabel>{t("form.step3.summary.phone")}</RowLabel>
-          <RowValue>{values.phone.trim() || "-"}</RowValue>
+          <RowValue>{values.phone?.trim() || "-"}</RowValue>
         </Row>
 
         <Divider aria-hidden />
 
         <ConsentField>
-          <Checkbox
-            id={consentId}
-            checked={values.consent}
-            invalid={Boolean(step3Errors.consent)}
-            aria-describedby={
-              step3Errors.consent ? consentErrorId : undefined
-            }
-            label={t("form.step3.consent.label")}
-            onCheckedChange={(checked) => patchValues({ consent: checked })}
+          <Controller
+            name="consent"
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                id={consentId}
+                checked={field.value}
+                invalid={Boolean(errors.consent)}
+                aria-describedby={
+                  errors.consent ? consentErrorId : undefined
+                }
+                label={t("form.step3.consent.label")}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked);
+                  clearErrors("consent");
+                }}
+              />
+            )}
           />
-          {step3Errors.consent ? (
+          {errors.consent?.message ? (
             <FieldError id={consentErrorId} role="alert">
-              {t("form.step3.consent.required")}
+              {t(errors.consent.message)}
             </FieldError>
           ) : null}
         </ConsentField>

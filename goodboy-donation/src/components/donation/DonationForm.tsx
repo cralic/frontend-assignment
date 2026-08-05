@@ -1,16 +1,23 @@
 "use client";
 
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import { DonationStep1 } from "@/components/donation/DonationStep1";
 import { DonationStep2 } from "@/components/donation/DonationStep2";
 import { DonationStep3 } from "@/components/donation/DonationStep3";
 import { FormActions } from "@/components/donation/FormActions";
+import { ContributeApiError } from "@/api/shelters";
+import { useContributeMutation } from "@/hooks/shelters";
 import {
-  hasStepErrors,
-  validateStep1,
-  validateStep2,
-  validateStep3,
-} from "@/lib/validateDonationForm";
+  donationDefaultValues,
+  type DonationFormValues,
+} from "@/lib/donationSchema";
+import {
+  applyContributeFieldErrors,
+  mapContributeErrors,
+} from "@/lib/mapContributeErrors";
+import { toContributeRequest } from "@/lib/toContributeRequest";
 import { useDonationFormStore } from "@/store/donationForm";
 
 export function DonationForm() {
@@ -21,52 +28,122 @@ export function DonationForm() {
   return <DonationStep3 />;
 }
 
+const Feedback = styled.p<{ $type: "success" | "error" }>`
+  margin: 0;
+  color: ${({ theme, $type }) =>
+    $type === "success"
+      ? theme.colors.action.primary.default
+      : theme.colors.feedback.error};
+  font-size: ${({ theme }) => theme.typography.text.sm.size}px;
+  font-weight: ${({ theme }) => theme.typography.text.sm.weight};
+  line-height: ${({ theme }) => theme.typography.text.sm.lineHeight}px;
+`;
+
+const ActionsBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.space[16]}px;
+  width: 100%;
+`;
+
 export function DonationFormActions() {
   const { t } = useTranslation();
+  const contribute = useContributeMutation();
+  const { getValues, setError, trigger, reset } =
+    useFormContext<DonationFormValues>();
   const {
     stepIndex,
-    values,
-    setStep1Errors,
-    setStep2Errors,
-    setStep3Errors,
+    submitFeedback,
+    setStepIndex,
+    setSubmitFeedback,
     nextStep,
     prevStep,
+    reset: resetStore,
   } = useDonationFormStore();
 
   const isLastStep = stepIndex === 2;
 
-  function handleContinue() {
-    if (stepIndex === 0) {
-      const errors = validateStep1(values);
-      setStep1Errors(errors);
-      if (hasStepErrors(errors)) return;
-    }
+  async function handleContinue() {
+    setSubmitFeedback(null);
 
-    if (stepIndex === 1) {
-      const errors = validateStep2(values);
-      setStep2Errors(errors);
-      if (hasStepErrors(errors)) return;
-    }
+    const isValid = await trigger(undefined, { shouldFocus: true });
+    if (!isValid) return;
 
-    if (stepIndex === 2) {
-      const errors = validateStep3(values);
-      setStep3Errors(errors);
-      if (hasStepErrors(errors)) return;
+    if (!isLastStep) {
+      nextStep();
       return;
     }
 
-    nextStep();
+    try {
+      const response = await contribute.mutateAsync(
+        toContributeRequest(getValues()),
+      );
+      const successMessage =
+        response.messages.find((message) => message.type === "SUCCESS")
+          ?.message ?? t("form.submit.success");
+
+      reset(donationDefaultValues);
+      resetStore();
+      setSubmitFeedback({ type: "success", message: successMessage });
+    } catch (error) {
+      if (error instanceof ContributeApiError) {
+        const mapped = mapContributeErrors(error.response.messages);
+        applyContributeFieldErrors(mapped.fields, setError);
+
+        if (mapped.earliestStep != null) {
+          setStepIndex(mapped.earliestStep);
+        }
+
+        const apiMessage =
+          error.response.messages.find((message) => message.type === "ERROR")
+            ?.message ?? error.message;
+
+        setSubmitFeedback({
+          type: "error",
+          message:
+            mapped.earliestStep != null
+              ? t("form.submit.fieldError")
+              : apiMessage === "Something went wrong" ||
+                  apiMessage.startsWith("joi.")
+                ? t("form.submit.error")
+                : apiMessage,
+        });
+        return;
+      }
+
+      setSubmitFeedback({
+        type: "error",
+        message: t("form.submit.error"),
+      });
+    }
   }
 
   return (
-    <FormActions
-      showBack={stepIndex > 0}
-      onBack={prevStep}
-      onContinue={handleContinue}
-      continueLabel={
-        isLastStep ? t("form.actions.submit") : t("form.actions.continue")
-      }
-      showContinueArrow={!isLastStep}
-    />
+    <ActionsBlock>
+      {submitFeedback ? (
+        <Feedback
+          $type={submitFeedback.type}
+          role={submitFeedback.type === "error" ? "alert" : "status"}
+        >
+          {submitFeedback.message}
+        </Feedback>
+      ) : null}
+      <FormActions
+        showBack={stepIndex > 0}
+        onBack={prevStep}
+        onContinue={() => {
+          void handleContinue();
+        }}
+        continueLabel={
+          contribute.isPending
+            ? t("form.actions.submitting")
+            : isLastStep
+              ? t("form.actions.submit")
+              : t("form.actions.continue")
+        }
+        showContinueArrow={!isLastStep && !contribute.isPending}
+        continueDisabled={contribute.isPending}
+      />
+    </ActionsBlock>
   );
 }

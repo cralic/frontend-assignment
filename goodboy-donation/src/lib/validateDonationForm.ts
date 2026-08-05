@@ -1,31 +1,15 @@
-import { type PhoneCountryCode } from "@/config/donation";
-import type { DonationFormValues } from "@/store/donationForm";
+import type { PhoneCountryCode } from "@/config/donation";
+import {
+  donationFormSchema,
+  type DonationFormValues,
+} from "@/lib/donationSchema";
+import { isValidEmail } from "@/lib/email";
 
-export type Step1Field = "shelterId" | "amount";
-export type Step2Field = "firstName" | "lastName" | "email" | "phone";
-export type Step3Field = "consent";
-
-export type Step1Errors = Partial<Record<Step1Field, true>>;
-export type Step2Errors = Partial<Record<Step2Field, true>>;
-export type Step3Errors = Partial<Record<Step3Field, true>>;
-
-/** @see https://colinhacks.com/essays/reasonable-email-regex */
-const EMAIL_PATTERN =
-  /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-\.]*)[a-z0-9_+\-]@([a-z0-9][a-z0-9\-]*\.)+[a-z]{2,}$/i;
 /** @see https://github.com/ariankoochak/regex-patterns-of-all-countries */
 const SK_PHONE_PATTERN =
   /^(\+?421)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/;
 const CZ_PHONE_PATTERN =
   /^(\+?420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/;
-const FIRST_NAME_MIN = 2;
-const FIRST_NAME_MAX = 20;
-const LAST_NAME_MIN = 2;
-const LAST_NAME_MAX = 30;
-
-function isLengthInRange(value: string, min: number, max: number) {
-  const length = value.trim().length;
-  return length >= min && length <= max;
-}
 
 function isValidPhone(phone: string, country: PhoneCountryCode) {
   const normalized = phone.replace(/\s+/g, "");
@@ -33,56 +17,82 @@ function isValidPhone(phone: string, country: PhoneCountryCode) {
   return CZ_PHONE_PATTERN.test(normalized);
 }
 
-export function validateStep1(values: DonationFormValues): Step1Errors {
-  const errors: Step1Errors = {};
+export const STEP_FIELDS = [
+  ["helpType", "shelterId", "shelterName", "amount"],
+  ["firstName", "lastName", "email", "phone", "phoneCountry"],
+  ["consent"],
+] as const satisfies ReadonlyArray<ReadonlyArray<keyof DonationFormValues>>;
 
-  if (values.helpType === "shelter" && !values.shelterId.trim()) {
-    errors.shelterId = true;
-  }
+/** Full-form schema that only enforces rules for the active wizard step. */
+export function getStepSchema(stepIndex: number) {
+  return donationFormSchema.superRefine((values, ctx) => {
+    if (stepIndex === 0) {
+      if (values.helpType === "shelter" && !values.shelterId.trim()) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["shelterId"],
+          message: "form.step1.shelter.required",
+        });
+      }
 
-  if (values.amount == null || values.amount <= 0) {
-    errors.amount = true;
-  }
+      if (values.amount <= 0) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["amount"],
+          message: "form.step1.amount.required",
+        });
+      }
+      return;
+    }
 
-  return errors;
-}
+    if (stepIndex === 1) {
+      const firstName = values.firstName.trim();
+      // Optional on FE (assignment); unmarked in Figma; API requires it.
+      if (
+        firstName.length > 0 &&
+        (firstName.length < 2 || firstName.length > 20)
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["firstName"],
+          message: "form.step2.firstName.invalid",
+        });
+      }
 
-export function validateStep2(values: DonationFormValues): Step2Errors {
-  const errors: Step2Errors = {};
-  const firstName = values.firstName.trim();
+      const lastName = values.lastName.trim();
+      if (lastName.length < 2 || lastName.length > 30) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["lastName"],
+          message: "form.step2.lastName.required",
+        });
+      }
 
-  if (
-    firstName.length > 0 &&
-    !isLengthInRange(values.firstName, FIRST_NAME_MIN, FIRST_NAME_MAX)
-  ) {
-    errors.firstName = true;
-  }
+      const email = values.email.trim();
+      if (!email || !isValidEmail(email)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["email"],
+          message: "form.step2.email.required",
+        });
+      }
 
-  if (!isLengthInRange(values.lastName, LAST_NAME_MIN, LAST_NAME_MAX)) {
-    errors.lastName = true;
-  }
+      if (!isValidPhone(values.phone, values.phoneCountry)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["phone"],
+          message: "form.step2.phone.required",
+        });
+      }
+      return;
+    }
 
-  if (!values.email.trim() || !EMAIL_PATTERN.test(values.email.trim())) {
-    errors.email = true;
-  }
-
-  if (!isValidPhone(values.phone, values.phoneCountry)) {
-    errors.phone = true;
-  }
-
-  return errors;
-}
-
-export function validateStep3(values: DonationFormValues): Step3Errors {
-  const errors: Step3Errors = {};
-
-  if (!values.consent) {
-    errors.consent = true;
-  }
-
-  return errors;
-}
-
-export function hasStepErrors(errors: object) {
-  return Object.keys(errors).length > 0;
+    if (stepIndex === 2 && !values.consent) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["consent"],
+        message: "form.step3.consent.required",
+      });
+    }
+  });
 }
