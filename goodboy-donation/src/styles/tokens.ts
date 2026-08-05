@@ -54,7 +54,9 @@ export const radius = {
 } as const;
 
 export const space = {
+  4: 4,
   8: 8,
+  10: 10,
   12: 12,
   16: 16,
   20: 20,
@@ -113,6 +115,13 @@ export const typography = {
       lineHeight: 24,
       weight: 400,
       paragraphSpacing: 16,
+      letterSpacing: 0,
+    },
+    sm: {
+      size: 14,
+      lineHeight: 20,
+      weight: 500,
+      paragraphSpacing: 12,
       letterSpacing: 0,
     },
   },

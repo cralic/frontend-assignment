@@ -1,6 +1,10 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
+import {
+  DonationForm,
+  DonationFormActions,
+} from "@/components/donation/DonationForm";
 import { HomePageShell } from "@/components/layout/HomePageShell";
 
 export default function HomePage() {
@@ -9,13 +13,11 @@ export default function HomePage() {
   return (
     <HomePageShell
       image={
-        <img
-          src="/images/home-hero.png"
-          alt=""
-        />
+        <img src="/images/home-hero.png" alt={t("pages.home.heroAlt")} />
       }
+      actions={<DonationFormActions />}
     >
-      <h1>{t("pages.home.title")}</h1>
+      <DonationForm />
     </HomePageShell>
   );
 }

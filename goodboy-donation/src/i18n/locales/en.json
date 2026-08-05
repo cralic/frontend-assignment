@@ -11,7 +11,8 @@
   },
   "pages": {
     "home": {
-      "title": "I want to help"
+      "title": "I want to help",
+      "heroAlt": "A golden-colored puppy wearing a red collar sits on a sandy beach under a bright sky, looking up with big brown eyes."
     },
     "about": {
       "title": "About",
@@ -25,6 +26,7 @@
     },
     "contact": {
       "title": "Contact",
+      "heroAlt": "A golden retriever sitting on a sandy beach at sunset.",
       "cards": {
         "email": {
           "title": "Email",
@@ -39,6 +41,55 @@
           "description": "Mon-Fri from 8am to 5pm."
         }
       }
+    }
+  },
+  "form": {
+    "actions": {
+      "back": "Back",
+      "continue": "Continue",
+      "submit": "Submit form"
+    },
+    "stepper": {
+      "label": "Donation form progress",
+      "status": {
+        "completed": "completed",
+        "current": "current",
+        "upcoming": "upcoming"
+      },
+      "steps": {
+        "shelter": "Shelter selection",
+        "personal": "Personal details",
+        "confirm": "Confirmation"
+      }
+    },
+    "step1": {
+      "title": "Choose how you want to help",
+      "helpType": {
+        "shelter": "Donate to a specific shelter",
+        "foundation": "Donate to the whole foundation",
+        "label": "Form of help"
+      },
+      "shelter": {
+        "sectionTitle": "About the project",
+        "label": "Shelter",
+        "optional": "(Optional)",
+        "placeholder": "Select a shelter from the list",
+        "loading": "Loading shelters…",
+        "error": "Could not load shelters. Please try again later.",
+        "required": "Please select a shelter from the list."
+      },
+      "amount": {
+        "title": "Amount I want to contribute",
+        "label": "Custom amount",
+        "currency": "€",
+        "required": "Please enter an amount greater than 0 €."
+      }
+    },
+    "step2": {
+      "title": "We need a few details from you"
+    },
+    "step3": {
+      "title": "Review your details"
     }
   }
 }

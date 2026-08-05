@@ -3,7 +3,7 @@
 import { useTranslation } from "react-i18next";
 import styled, { keyframes } from "styled-components";
 import LoadingIcon from "@/assets/icons/loading.svg";
-import { useShelterResults } from "@/hooks/useShelterResults";
+import { useShelterResults } from "@/hooks/shelters";
 
 const Container = styled.div`
   display: flex;

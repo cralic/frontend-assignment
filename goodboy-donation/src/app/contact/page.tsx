@@ -43,7 +43,7 @@ export default function ContactPage() {
       <Body>
         <ContactDetails />
         <HeroImage>
-          <img src="/images/contact-hero.png" alt="" />
+          <img src="/images/contact-hero.png" alt={t("pages.contact.heroAlt")} />
         </HeroImage>
       </Body>
     </SecondaryPageShell>

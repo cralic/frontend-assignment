@@ -3,7 +3,7 @@
 import styled from "styled-components";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
-const Page = styled.div`
+const Page = styled.main`
   display: flex;
   width: 100%;
   max-width: ${({ theme }) => theme.layout.pageMaxWidth}px;
