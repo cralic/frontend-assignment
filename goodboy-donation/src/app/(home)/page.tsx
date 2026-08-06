@@ -6,7 +6,6 @@ import {
   DonationForm,
   DonationFormActions,
 } from "@/components/donation/DonationForm";
-import { DonationDocumentMeta } from "@/components/donation/DonationDocumentMeta";
 import { DonationFormProvider } from "@/components/donation/DonationFormProvider";
 import { HomePageShell } from "@/components/layout/HomePageShell";
 import { homeHero } from "@/config/home";
@@ -16,7 +15,6 @@ export default function HomePage() {
 
   return (
     <DonationFormProvider>
-      <DonationDocumentMeta />
       <HomePageShell
         image={
           <Image

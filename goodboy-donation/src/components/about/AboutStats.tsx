@@ -103,6 +103,18 @@ const StatusText = styled.p`
   text-align: center;
 `;
 
+const VisuallyHidden = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`;
+
 function formatContribution(value: number, locale: string) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -138,7 +150,13 @@ export function AboutStats() {
 
   return (
     <Container>
-      <Content>
+      {isPending ? (
+        <VisuallyHidden role="status" aria-live="polite">
+          {t("pages.about.loading")}
+        </VisuallyHidden>
+      ) : null}
+
+      <Content aria-busy={isPending || undefined}>
         <MetricItem>
           <NumberAndText>
             <MetricValue aria-live="polite">

@@ -98,6 +98,7 @@ const CustomInput = styled.input<{ $empty: boolean; $digits: number }>`
   text-align: right;
   outline: none;
   appearance: textfield;
+  border-radius: 2px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -106,7 +107,8 @@ const CustomInput = styled.input<{ $empty: boolean; $digits: number }>`
   }
 
   &:focus-visible {
-    outline: none;
+    outline: 2px solid ${({ theme }) => theme.colors.action.primary.default};
+    outline-offset: 2px;
   }
 `;
 

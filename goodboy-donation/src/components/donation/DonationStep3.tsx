@@ -210,6 +210,7 @@ export function DonationStep3() {
                 id={consentId}
                 checked={field.value}
                 invalid={Boolean(errors.consent)}
+                aria-required
                 aria-describedby={
                   errors.consent ? consentErrorId : undefined
                 }

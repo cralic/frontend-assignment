@@ -12,6 +12,7 @@ type CheckboxProps = {
   invalid?: boolean;
   disabled?: boolean;
   "aria-describedby"?: string;
+  "aria-required"?: boolean;
   className?: string;
 };
 
@@ -120,6 +121,7 @@ export function Checkbox({
   invalid,
   disabled,
   "aria-describedby": ariaDescribedBy,
+  "aria-required": ariaRequired,
   className,
 }: CheckboxProps) {
   return (
@@ -132,6 +134,7 @@ export function Checkbox({
           $invalid={invalid}
           aria-invalid={invalid || undefined}
           aria-describedby={ariaDescribedBy}
+          aria-required={ariaRequired || undefined}
           onCheckedChange={(value) => onCheckedChange(value === true)}
         >
           <Indicator>

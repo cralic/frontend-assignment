@@ -28,6 +28,7 @@ export function buildPageMetadata({
   description,
   path = "/",
   image = defaultOgImage,
+  locale = "sk_SK",
 }: {
   title: string;
   description: string;
@@ -38,6 +39,7 @@ export function buildPageMetadata({
     height: number;
     alt: string;
   };
+  locale?: "sk_SK" | "en_US";
 }): Metadata {
   const url = new URL(path, siteMetadataBase).toString();
 
@@ -50,7 +52,7 @@ export function buildPageMetadata({
       description,
       url,
       siteName: sk.app.title,
-      locale: "sk_SK",
+      locale,
       type: "website",
       images: [
         {
