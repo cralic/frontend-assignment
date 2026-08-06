@@ -16,6 +16,7 @@ type SelectProps = {
   onValueChange: (value: string) => void;
   options: SelectOption[];
   placeholder: string;
+  clearLabel?: string;
   id?: string;
   "aria-labelledby"?: string;
   "aria-describedby"?: string;
@@ -24,6 +25,8 @@ type SelectProps = {
   disabled?: boolean;
   className?: string;
 };
+
+const CLEAR_VALUE = "__clear__";
 
 const Trigger = styled(SelectPrimitive.Trigger)`
   display: flex;
@@ -122,6 +125,18 @@ const Item = styled(SelectPrimitive.Item)`
   }
 `;
 
+const ClearItem = styled(Item)`
+  color: ${({ theme }) => theme.colors.content.tertiary};
+
+  &[data-highlighted] {
+    color: ${({ theme }) => theme.colors.content.primary};
+  }
+
+  &[data-state="checked"] {
+    color: ${({ theme }) => theme.colors.content.tertiary};
+  }
+`;
+
 const ItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   position: absolute;
   right: ${({ theme }) => theme.space[12]}px;
@@ -153,6 +168,7 @@ export function Select({
   onValueChange,
   options,
   placeholder,
+  clearLabel,
   id,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -164,7 +180,9 @@ export function Select({
   return (
     <SelectPrimitive.Root
       value={value ?? ""}
-      onValueChange={onValueChange}
+      onValueChange={(next) => {
+        onValueChange(next === CLEAR_VALUE ? "" : next);
+      }}
       disabled={disabled}
     >
       <Trigger
@@ -189,6 +207,11 @@ export function Select({
             </ScrollButton>
           </SelectPrimitive.ScrollUpButton>
           <Viewport>
+            {clearLabel ? (
+              <ClearItem value={CLEAR_VALUE}>
+                <SelectPrimitive.ItemText>{clearLabel}</SelectPrimitive.ItemText>
+              </ClearItem>
+            ) : null}
             {options.map((option) => (
               <Item key={option.value} value={option.value}>
                 <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>

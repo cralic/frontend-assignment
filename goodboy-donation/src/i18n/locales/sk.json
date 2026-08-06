@@ -3,11 +3,45 @@
     "title": "GoodBoy",
     "description": "Podpora slovenských útulkov"
   },
+  "seo": {
+    "titleTemplate": "%s | GoodBoy",
+    "home": {
+      "title": "Chcem pomôcť",
+      "description": "Prispejte útulku alebo celej nadácii Good Boy a pomôžte psom na Slovensku."
+    },
+    "about": {
+      "title": "O projekte",
+      "description": "Spoznajte nadáciu Good Boy — záchrana, starostlivosť a nový domov pre psy v Žiline."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Napíšte nám, zavolajte alebo nás navštívte. Radi vám pomôžeme s príspevkom či spoluprácou."
+    },
+    "steps": {
+      "0": {
+        "title": "Výber pomoci",
+        "description": "Vyberte, či chcete prispieť konkrétnemu útulku alebo celej nadácii, a zadajte sumu."
+      },
+      "1": {
+        "title": "Osobné údaje",
+        "description": "Vyplňte meno, e-mail a telefón, aby sme mohli spracovať váš príspevok."
+      },
+      "2": {
+        "title": "Potvrdenie",
+        "description": "Skontrolujte zadané údaje a potvrďte odoslanie príspevku."
+      },
+      "success": {
+        "title": "Ďakujeme",
+        "description": "Váš príspevok bol úspešne zaznamenaný. Ďakujeme, že pomáhate."
+      }
+    }
+  },
   "nav": {
     "home": "Domov",
     "about": "O projekte",
     "contact": "Kontakt",
-    "back": "Späť"
+    "back": "Späť",
+    "language": "Jazyk"
   },
   "pages": {
     "home": {
@@ -29,16 +63,16 @@
       "heroAlt": "Zlatý retríver sedí na piesočnatej pláži pri západe slnka.",
       "cards": {
         "email": {
-          "title": "Email",
-          "description": "Our friendly team is here to help."
+          "title": "E-mail",
+          "description": "Náš priateľský tím je tu, aby vám pomohol."
         },
         "office": {
-          "title": "Office",
-          "description": "Come say hello at our office HQ."
+          "title": "Kancelária",
+          "description": "Príďte sa pozdraviť do nášho sídla."
         },
         "phone": {
-          "title": "Phone",
-          "description": "Mon-Fri from 8am to 5pm."
+          "title": "Telefón",
+          "description": "Po–Pia od 8:00 do 17:00."
         }
       }
     }
@@ -82,6 +116,7 @@
         "label": "Útulok",
         "optional": "(Nepovinné)",
         "placeholder": "Vyberte útulok zo zoznamu",
+        "clear": "Zrušiť výber",
         "loading": "Načítavam útulky…",
         "error": "Nepodarilo sa načítať útulky. Skúste to prosím neskôr.",
         "required": "Vyberte útulok zo zoznamu."

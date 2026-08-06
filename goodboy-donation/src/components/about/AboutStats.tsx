@@ -129,7 +129,7 @@ function MetricDisplay({
     return <LoadingSpinner aria-hidden />;
   }
 
-  return isError ? "0" : value;
+  return isError ? "-" : value;
 }
 
 export function AboutStats() {

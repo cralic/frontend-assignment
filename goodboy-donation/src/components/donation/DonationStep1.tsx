@@ -114,6 +114,11 @@ export function DonationStep1() {
                       ? t("form.step1.shelter.loading")
                       : t("form.step1.shelter.placeholder")
                   }
+                  clearLabel={
+                    !shelterRequired && field.value
+                      ? t("form.step1.shelter.clear")
+                      : undefined
+                  }
                   options={shelterOptions}
                 />
               )}

@@ -25,7 +25,11 @@ export const STEP_FIELDS = [
 
 export function getStepSchema(stepIndex: number) {
   return donationFormSchema.superRefine((values, ctx) => {
-    if (stepIndex === 0) {
+    const validateStep1 = stepIndex === 0 || stepIndex === 2;
+    const validateStep2 = stepIndex === 1 || stepIndex === 2;
+    const validateStep3 = stepIndex === 2;
+
+    if (validateStep1) {
       if (values.helpType === "shelter" && !values.shelterId.trim()) {
         ctx.addIssue({
           code: "custom",
@@ -41,10 +45,9 @@ export function getStepSchema(stepIndex: number) {
           message: "form.step1.amount.required",
         });
       }
-      return;
     }
 
-    if (stepIndex === 1) {
+    if (validateStep2) {
       const firstName = values.firstName.trim();
       // Optional on FE (assignment); unmarked in Figma; API requires it.
       if (
@@ -83,10 +86,9 @@ export function getStepSchema(stepIndex: number) {
           message: "form.step2.phone.required",
         });
       }
-      return;
     }
 
-    if (stepIndex === 2 && !values.consent) {
+    if (validateStep3 && !values.consent) {
       ctx.addIssue({
         code: "custom",
         path: ["consent"],

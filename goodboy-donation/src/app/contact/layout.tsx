@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
 import { getImageProps } from "next/image";
 import { preload } from "react-dom";
 import { contactHero } from "@/config/contact";
+import sk from "@/i18n/locales/sk.json";
+import { buildPageMetadata, defaultOgImage } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: sk.seo.contact.title,
+  description: sk.seo.contact.description,
+  path: "/contact",
+  image: defaultOgImage,
+});
 
 export default function ContactLayout({
   children,

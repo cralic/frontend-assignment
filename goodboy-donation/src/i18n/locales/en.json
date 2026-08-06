@@ -3,11 +3,45 @@
     "title": "GoodBoy",
     "description": "Support for Slovak dog shelters"
   },
+  "seo": {
+    "titleTemplate": "%s | GoodBoy",
+    "home": {
+      "title": "I want to help",
+      "description": "Donate to a shelter or the whole Good Boy Foundation and help dogs in Slovakia."
+    },
+    "about": {
+      "title": "About",
+      "description": "Learn about the Good Boy Foundation — rescue, care, and new homes for dogs in Žilina."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Email, call, or visit us. We’re happy to help with donations or collaboration."
+    },
+    "steps": {
+      "0": {
+        "title": "Choose how to help",
+        "description": "Pick a shelter or the foundation, then enter the amount you want to give."
+      },
+      "1": {
+        "title": "Your details",
+        "description": "Enter your name, email, and phone so we can process your contribution."
+      },
+      "2": {
+        "title": "Confirm",
+        "description": "Review your details and confirm sending your contribution."
+      },
+      "success": {
+        "title": "Thank you",
+        "description": "Your contribution was recorded successfully. Thank you for helping."
+      }
+    }
+  },
   "nav": {
     "home": "Home",
     "about": "About",
     "contact": "Contact",
-    "back": "Back"
+    "back": "Back",
+    "language": "Language"
   },
   "pages": {
     "home": {
@@ -82,6 +116,7 @@
         "label": "Shelter",
         "optional": "(Optional)",
         "placeholder": "Select a shelter from the list",
+        "clear": "Clear selection",
         "loading": "Loading shelters…",
         "error": "Could not load shelters. Please try again later.",
         "required": "Please select a shelter from the list."

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Logo from "@/assets/logo.svg";
 import { FacebookIcon, InstagramIcon } from "@/components/icons/social";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { socialLinks } from "@/config/socials";
 
 const Footer = styled.footer`
@@ -27,6 +28,10 @@ const RightContent = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.space[32]}px;
+
+  @media (max-width: 640px) {
+    gap: ${({ theme }) => theme.space[16]}px;
+  }
 `;
 
 const Socials = styled.div`
@@ -75,49 +80,54 @@ const NavLink = styled(Link)`
     outline-offset: 2px;
     border-radius: 2px;
   }
+
+  @media (max-width: 640px) {
+    font-size: ${({ theme }) => theme.typography.text.sm.size}px;
+  }
 `;
 
 const socialIcons = {
-    facebook: FacebookIcon,
-    instagram: InstagramIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
 } as const;
 
 type SiteFooterProps = {
-    className?: string;
-    showSocials?: boolean;
+  className?: string;
+  showSocials?: boolean;
 };
 
 export function SiteFooter({ className, showSocials = false }: SiteFooterProps) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <Footer className={className}>
-            <BrandLink href="/" aria-label={t("app.title")}>
-                <Logo width={124} height={32} role="img" aria-label={t("app.title")} />
-            </BrandLink>
+  return (
+    <Footer className={className}>
+      <BrandLink href="/" aria-label={t("app.title")}>
+        <Logo width={124} height={32} role="img" aria-label={t("app.title")} />
+      </BrandLink>
 
-            <RightContent>
-                {showSocials ? (
-                    <Socials>
-                        {socialLinks.map((item) => {
-                            const Icon = socialIcons[item.id];
-                            return (
-                                <SocialLink
-                                    key={item.id}
-                                    href={item.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={item.label}
-                                >
-                                    <Icon width={16} height={16} aria-hidden />
-                                </SocialLink>
-                            );
-                        })}
-                    </Socials>
-                ) : null}
-                <NavLink href="/contact">{t("nav.contact")}</NavLink>
-                <NavLink href="/about">{t("nav.about")}</NavLink>
-            </RightContent>
-        </Footer>
-    );
+      <RightContent>
+        {showSocials ? (
+          <Socials>
+            {socialLinks.map((item) => {
+              const Icon = socialIcons[item.id];
+              return (
+                <SocialLink
+                  key={item.id}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                >
+                  <Icon width={16} height={16} aria-hidden />
+                </SocialLink>
+              );
+            })}
+          </Socials>
+        ) : null}
+        <NavLink href="/contact">{t("nav.contact")}</NavLink>
+        <NavLink href="/about">{t("nav.about")}</NavLink>
+        <LanguageSwitcher />
+      </RightContent>
+    </Footer>
+  );
 }
