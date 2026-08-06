@@ -15,7 +15,7 @@ const Page = styled.main`
   box-sizing: border-box;
 
   @media (max-width: 1100px) {
-    padding: ${({ theme }) => theme.space[32]}px;
+    padding: ${({ theme }) => theme.space[16]}px;
   }
 `;
 
@@ -61,23 +61,20 @@ const FooterBlock = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.space[40]}px;
   width: 100%;
+
+  @media (max-width: 1100px) {
+    margin-top: ${({ theme }) => theme.space[40]}px;
+  }
 `;
 
 const HeroImage = styled.div`
+  position: relative;
   flex: 1 1 0;
   min-width: 0;
   align-self: stretch;
   max-height: calc(100vh - ${({ theme }) => theme.space[20] * 2}px);
   border-radius: ${({ theme }) => theme.radius.image}px;
   overflow: hidden;
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
 
   @media (max-width: 1100px) {
     flex: 0 0 auto;

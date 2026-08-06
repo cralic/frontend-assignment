@@ -7,6 +7,7 @@ import { DonationStep1 } from "@/components/donation/DonationStep1";
 import { DonationStep2 } from "@/components/donation/DonationStep2";
 import { DonationStep3 } from "@/components/donation/DonationStep3";
 import { FormActions } from "@/components/donation/FormActions";
+import { Button } from "@/components/ui/Button";
 import { ContributeApiError } from "@/api/shelters";
 import { useContributeMutation } from "@/hooks/shelters";
 import {
@@ -46,6 +47,13 @@ const ActionsBlock = styled.div`
   width: 100%;
 `;
 
+const SuccessActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
 export function DonationFormActions() {
   const { t } = useTranslation();
   const contribute = useContributeMutation();
@@ -62,6 +70,7 @@ export function DonationFormActions() {
   } = useDonationFormStore();
 
   const isLastStep = stepIndex === 2;
+  const isSuccess = submitFeedback?.type === "success";
 
   async function handleContinue() {
     setSubmitFeedback(null);
@@ -82,8 +91,6 @@ export function DonationFormActions() {
         response.messages.find((message) => message.type === "SUCCESS")
           ?.message ?? t("form.submit.success");
 
-      reset(donationDefaultValues);
-      resetStore();
       setSubmitFeedback({ type: "success", message: successMessage });
     } catch (error) {
       if (error instanceof ContributeApiError) {
@@ -118,13 +125,25 @@ export function DonationFormActions() {
     }
   }
 
+  function handleDonateAgain() {
+    reset(donationDefaultValues);
+    resetStore();
+  }
+
+  if (isSuccess) {
+    return (
+      <SuccessActions>
+        <Button variant="secondary" type="button" onClick={handleDonateAgain}>
+          {t("form.actions.donateAgain")}
+        </Button>
+      </SuccessActions>
+    );
+  }
+
   return (
     <ActionsBlock>
-      {submitFeedback ? (
-        <Feedback
-          $type={submitFeedback.type}
-          role={submitFeedback.type === "error" ? "alert" : "status"}
-        >
+      {submitFeedback?.type === "error" ? (
+        <Feedback $type="error" role="alert">
           {submitFeedback.message}
         </Feedback>
       ) : null}

@@ -25,6 +25,8 @@ const Content = styled.div`
 
   @media (max-width: 900px) {
     flex-direction: column;
+    gap: ${({ theme }) => theme.space[24]}px;
+    padding-block: ${({ theme }) => theme.space[32]}px;
   }
 `;
 
@@ -59,6 +61,12 @@ const MetricValue = styled.p`
   letter-spacing: ${({ theme }) =>
     theme.typography.heading.xl.letterSpacing}px;
   text-align: center;
+
+  @media (max-width: 900px) {
+    min-height: 48px;
+    font-size: 40px;
+    line-height: 48px;
+  }
 `;
 
 const spin = keyframes`

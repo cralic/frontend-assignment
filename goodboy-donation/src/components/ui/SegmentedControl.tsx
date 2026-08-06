@@ -76,6 +76,8 @@ const Item = styled(ToggleGroup.Item)`
   letter-spacing: ${({ theme }) => theme.typography.text.sm.letterSpacing}px;
   text-align: center;
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   transition: color 220ms ease;
 
   &[data-state="on"] {

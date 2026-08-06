@@ -23,7 +23,6 @@ export const STEP_FIELDS = [
   ["consent"],
 ] as const satisfies ReadonlyArray<ReadonlyArray<keyof DonationFormValues>>;
 
-/** Full-form schema that only enforces rules for the active wizard step. */
 export function getStepSchema(stepIndex: number) {
   return donationFormSchema.superRefine((values, ctx) => {
     if (stepIndex === 0) {

@@ -127,6 +127,11 @@ const Presets = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.space[16]}px;
   width: 100%;
+
+  @media (max-width: 640px) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 `;
 
 const PresetButton = styled(Button)`

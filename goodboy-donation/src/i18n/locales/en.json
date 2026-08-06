@@ -12,7 +12,7 @@
   "pages": {
     "home": {
       "title": "I want to help",
-      "heroAlt": "A golden-colored puppy wearing a red collar sits on a sandy beach under a bright sky, looking up with big brown eyes."
+      "heroAlt": "A young golden Cocker Spaniel puppy sitting upright on a sandy beach, looking upward."
     },
     "about": {
       "title": "About",
@@ -48,7 +48,8 @@
       "back": "Back",
       "continue": "Continue",
       "submit": "Submit form",
-      "submitting": "Submitting…"
+      "submitting": "Submitting…",
+      "donateAgain": "I want to donate again"
     },
     "submit": {
       "success": "Your contribution was recorded successfully",
@@ -120,6 +121,11 @@
     "step3": {
       "title": "Review your details",
       "subtitle": "Summary",
+      "success": {
+        "title": "Thank you for your contribution",
+        "subtitle": "Contribution summary",
+        "destination": "Recipient"
+      },
       "summary": {
         "helpType": "Form of help",
         "helpTypeValue": {

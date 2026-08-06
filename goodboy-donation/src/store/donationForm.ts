@@ -9,6 +9,8 @@ export type SubmitFeedback = {
 
 type DonationFormState = {
   stepIndex: number;
+  stepDirection: 1 | -1;
+  hasStepped: boolean;
   submitFeedback: SubmitFeedback | null;
   setStepIndex: (index: number) => void;
   nextStep: () => void;
@@ -19,25 +21,38 @@ type DonationFormState = {
 
 export const useDonationFormStore = create<DonationFormState>((set) => ({
   stepIndex: 0,
+  stepDirection: 1,
+  hasStepped: false,
   submitFeedback: null,
   setStepIndex: (index) =>
-    set({
-      stepIndex: Math.min(Math.max(index, 0), LAST_STEP_INDEX),
+    set((state) => {
+      const nextIndex = Math.min(Math.max(index, 0), LAST_STEP_INDEX);
+      return {
+        stepIndex: nextIndex,
+        stepDirection: nextIndex >= state.stepIndex ? 1 : -1,
+        hasStepped: state.hasStepped || nextIndex !== state.stepIndex,
+      };
     }),
   nextStep: () =>
     set((state) => ({
       stepIndex: Math.min(state.stepIndex + 1, LAST_STEP_INDEX),
+      stepDirection: 1,
+      hasStepped: true,
       submitFeedback: null,
     })),
   prevStep: () =>
     set((state) => ({
       stepIndex: Math.max(state.stepIndex - 1, 0),
+      stepDirection: -1,
+      hasStepped: true,
       submitFeedback: null,
     })),
   setSubmitFeedback: (feedback) => set({ submitFeedback: feedback }),
   reset: () =>
     set({
       stepIndex: 0,
+      stepDirection: 1,
+      hasStepped: false,
       submitFeedback: null,
     }),
 }));

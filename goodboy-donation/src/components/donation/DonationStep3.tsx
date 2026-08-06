@@ -1,7 +1,12 @@
 "use client";
 
 import { useId } from "react";
-import { Controller, useFormContext, useFormState, useWatch } from "react-hook-form";
+import {
+  Controller,
+  useFormContext,
+  useFormState,
+  useWatch,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import {
@@ -11,9 +16,19 @@ import {
 import { Checkbox } from "@/components/ui/Checkbox";
 import { FieldError, FieldGroup } from "@/components/ui/Field";
 import type { DonationFormValues } from "@/lib/donationSchema";
+import { useDonationFormStore } from "@/store/donationForm";
 
 const Summary = styled(FieldGroup)`
   width: 100%;
+`;
+
+const SuccessBody = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.content.secondary};
+  font-size: ${({ theme }) => theme.typography.text.md.size}px;
+  font-weight: ${({ theme }) => theme.typography.text.md.weight};
+  line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.typography.text.md.letterSpacing}px;
 `;
 
 const Row = styled.div`
@@ -73,18 +88,70 @@ function formatFullName(firstName: string, lastName: string) {
   return [firstName.trim(), lastName.trim()].filter(Boolean).join(" ");
 }
 
+function DonationSuccessSummary() {
+  const { t } = useTranslation();
+  const { control } = useFormContext<DonationFormValues>();
+  const { submitFeedback } = useDonationFormStore();
+  const values = useWatch({ control });
+
+  const shelterName = values.shelterName?.trim() ?? "";
+  const destination = shelterName
+    ? shelterName
+    : t(
+        `form.step3.summary.helpTypeValue.${values.helpType ?? "foundation"}`,
+      );
+
+  return (
+    <DonationStepShell
+      currentStep={2}
+      allCompleted
+      title={t("form.step3.success.title")}
+    >
+      <Summary>
+        <SuccessBody role="status">
+          {submitFeedback?.type === "success"
+            ? submitFeedback.message
+            : t("form.submit.success")}
+        </SuccessBody>
+
+        <StepSubtitle>{t("form.step3.success.subtitle")}</StepSubtitle>
+
+        <Row>
+          <RowLabel>{t("form.step3.summary.amount")}</RowLabel>
+          <RowValue>
+            {formatAmount(
+              values.amount ?? 0,
+              t("form.step1.amount.currency"),
+            )}
+          </RowValue>
+        </Row>
+
+        <Row>
+          <RowLabel>{t("form.step3.success.destination")}</RowLabel>
+          <RowValue>{destination}</RowValue>
+        </Row>
+      </Summary>
+    </DonationStepShell>
+  );
+}
+
 export function DonationStep3() {
   const { t } = useTranslation();
   const consentId = useId();
   const consentErrorId = useId();
   const { control, clearErrors } = useFormContext<DonationFormValues>();
   const { errors } = useFormState({ control });
+  const { submitFeedback } = useDonationFormStore();
 
   const values = useWatch({ control });
   const fullName = formatFullName(
     values.firstName ?? "",
     values.lastName ?? "",
   );
+
+  if (submitFeedback?.type === "success") {
+    return <DonationSuccessSummary />;
+  }
 
   return (
     <DonationStepShell currentStep={2} title={t("form.step3.title")}>

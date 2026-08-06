@@ -60,6 +60,19 @@ const Item = styled.li<{ $isLast: boolean }>`
       : css`
           flex: 1 1 0;
         `}
+
+  @media (max-width: 640px) {
+    gap: 0;
+
+    ${({ $isLast }) =>
+      $isLast
+        ? css`
+            flex: 0 0 auto;
+          `
+        : css`
+            flex: 1 1 0;
+          `}
+  }
 `;
 
 const Label = styled.span<{ $status: StepStatus }>`
@@ -83,6 +96,18 @@ const Label = styled.span<{ $status: StepStatus }>`
         return theme.colors.content.primary;
     }
   }};
+
+  @media (max-width: 640px) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 `;
 
 const Tail = styled.span`

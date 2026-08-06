@@ -16,12 +16,12 @@ const Main = styled.main`
   box-sizing: border-box;
 
   @media (max-width: 1100px) {
-    padding-inline: ${({ theme }) => theme.space[32]}px;
+    padding-inline: ${({ theme }) => theme.space[16]}px;
   }
 
   @media (max-width: 900px) {
     padding-block: ${({ theme }) => theme.space[32]}px;
-    padding-inline: ${({ theme }) => theme.space[20]}px;
+    padding-inline: ${({ theme }) => theme.space[16]}px;
   }
 `;
 
@@ -50,6 +50,11 @@ const Title = styled.h1`
   line-height: ${({ theme }) => theme.typography.heading.lg.lineHeight}px;
   letter-spacing: ${({ theme }) =>
     theme.typography.heading.lg.letterSpacing}px;
+
+  @media (max-width: 1100px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
 `;
 
 type SecondaryPageShellProps = {

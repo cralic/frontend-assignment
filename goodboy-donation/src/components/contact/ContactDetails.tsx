@@ -18,6 +18,7 @@ const Grid = styled.div`
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.space[16]}px;
   }
 `;
 
@@ -28,10 +29,18 @@ const Card = styled.article`
   gap: ${({ theme }) => theme.space[20]}px;
   min-width: 0;
   text-align: center;
+
+  @media (max-width: 900px) {
+    flex-direction: row;
+    align-items: center;
+    gap: ${({ theme }) => theme.space[12]}px;
+    text-align: left;
+  }
 `;
 
 const FeaturedIcon = styled.span`
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 48px;
@@ -45,12 +54,32 @@ const FeaturedIcon = styled.span`
   }
 `;
 
+const CardBody = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: ${({ theme }) => theme.space[20]}px;
+  min-width: 0;
+  width: 100%;
+
+  @media (max-width: 900px) {
+    align-items: flex-start;
+    gap: ${({ theme }) => theme.space[8]}px;
+  }
+`;
+
 const TextBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.space[8]}px;
   width: 100%;
+
+  @media (max-width: 900px) {
+    align-items: flex-start;
+    gap: ${({ theme }) => theme.space[4]}px;
+  }
 `;
 
 const CardTitle = styled.h2`
@@ -93,6 +122,12 @@ const CardLink = styled.a`
     outline: 2px solid ${({ theme }) => theme.colors.action.primary.default};
     outline-offset: 2px;
   }
+
+  @media (max-width: 900px) {
+    justify-content: flex-start;
+    text-align: left;
+    padding-inline: 0;
+  }
 `;
 
 const CardValue = styled.span`
@@ -109,6 +144,12 @@ const CardValue = styled.span`
   font-weight: 500;
   line-height: ${({ theme }) => theme.typography.text.md.lineHeight}px;
   text-align: center;
+
+  @media (max-width: 900px) {
+    justify-content: flex-start;
+    text-align: left;
+    padding-inline: 0;
+  }
 `;
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -153,17 +194,21 @@ export function ContactDetails() {
             <FeaturedIcon>
               <Icon width={24} height={24} aria-hidden />
             </FeaturedIcon>
-            <TextBlock>
-              <CardTitle>{t(`pages.contact.cards.${card.id}.title`)}</CardTitle>
-              <SupportingText>
-                {t(`pages.contact.cards.${card.id}.description`)}
-              </SupportingText>
-            </TextBlock>
-            {card.href ? (
-              <CardLink href={card.href}>{card.value}</CardLink>
-            ) : (
-              <CardValue>{card.value}</CardValue>
-            )}
+            <CardBody>
+              <TextBlock>
+                <CardTitle>
+                  {t(`pages.contact.cards.${card.id}.title`)}
+                </CardTitle>
+                <SupportingText>
+                  {t(`pages.contact.cards.${card.id}.description`)}
+                </SupportingText>
+              </TextBlock>
+              {card.href ? (
+                <CardLink href={card.href}>{card.value}</CardLink>
+              ) : (
+                <CardValue>{card.value}</CardValue>
+              )}
+            </CardBody>
           </Card>
         );
       })}

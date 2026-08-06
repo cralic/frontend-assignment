@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import {
@@ -24,6 +25,13 @@ export function DonationFormProvider({ children }: DonationFormProviderProps) {
       return zodResolver(getStepSchema(stepIndex))(values, context, options);
     },
   });
+
+  // zustand survives client navigations while RHF does not - reset wizard on leave.
+  useEffect(() => {
+    return () => {
+      useDonationFormStore.getState().reset();
+    };
+  }, []);
 
   const { errors, submitCount } = form.formState;
   void errors;

@@ -33,6 +33,10 @@ const Socials = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.space[16]}px;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const SocialLink = styled.a`

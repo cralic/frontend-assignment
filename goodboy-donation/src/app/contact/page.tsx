@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ContactDetails } from "@/components/contact/ContactDetails";
 import { SecondaryPageShell } from "@/components/layout/SecondaryPageShell";
+import { contactHero } from "@/config/contact";
 
 const Body = styled.div`
   display: flex;
@@ -12,6 +14,10 @@ const Body = styled.div`
   gap: ${({ theme }) => theme.space[64]}px;
   width: 100%;
   min-height: 0;
+
+  @media (max-width: 900px) {
+    gap: ${({ theme }) => theme.space[32]}px;
+  }
 `;
 
 const HeroImage = styled.div`
@@ -23,16 +29,6 @@ const HeroImage = styled.div`
   margin-inline: auto;
   border-radius: ${({ theme }) => theme.radius.image}px;
   overflow: hidden;
-
-  img {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 40%;
-  }
 `;
 
 export default function ContactPage() {
@@ -43,7 +39,15 @@ export default function ContactPage() {
       <Body>
         <ContactDetails />
         <HeroImage>
-          <img src="/images/contact-hero.png" alt={t("pages.contact.heroAlt")} />
+          <Image
+            src={contactHero.src}
+            alt={t("pages.contact.heroAlt")}
+            fill
+            sizes={contactHero.sizes}
+            priority
+            fetchPriority="high"
+            style={{ objectFit: "cover", objectPosition: "50% 40%" }}
+          />
         </HeroImage>
       </Body>
     </SecondaryPageShell>

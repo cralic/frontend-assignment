@@ -12,7 +12,7 @@
   "pages": {
     "home": {
       "title": "Chcem pomôcť",
-      "heroAlt": "Zlatisté šteniatko s červeným obojkom sedí na piesočnatej pláži pod jasným nebom a pozerá hore veľkými hnedými očami."
+      "heroAlt": "Mladé zlaté šteniatko kokeršpaniela sedí vzpriamene na piesočnatej pláži a pozerá nahor."
     },
     "about": {
       "title": "O projekte",
@@ -48,7 +48,8 @@
       "back": "Späť",
       "continue": "Pokračovať",
       "submit": "Odoslať formulár",
-      "submitting": "Odosielam…"
+      "submitting": "Odosielam…",
+      "donateAgain": "Chcem prispieť znova"
     },
     "submit": {
       "success": "Príspevok bol úspešne zaznamenaný",
@@ -120,6 +121,11 @@
     "step3": {
       "title": "Skontrolujte si zadané údaje",
       "subtitle": "Zhrnutie",
+      "success": {
+        "title": "Ďakujeme za váš príspevok",
+        "subtitle": "Zhrnutie príspevku",
+        "destination": "Príjemca"
+      },
       "summary": {
         "helpType": "Forma pomoci",
         "helpTypeValue": {

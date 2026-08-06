@@ -3,7 +3,7 @@ export const colors = {
     primary: "#111827",
     secondary: "#374151",
     tertiary: "#4B5563",
-    quaternary: "#9CA3AF",
+    quaternary: "#9CA3AF", // fails WCAG AA on white/#F3F4F6 - kept to match design, but would change to darker for accessibility
     quintary: "#D1D5DB",
     top: "#000000",
   },
