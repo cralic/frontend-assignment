@@ -31,6 +31,21 @@ const Back = styled(Link)`
   svg {
     display: block;
     flex-shrink: 0;
+    transition: transform 150ms ease;
+  }
+
+  &:hover svg {
+    transform: translateX(-4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    svg {
+      transition: none;
+    }
+
+    &:hover svg {
+      transform: none;
+    }
   }
 `;
 
